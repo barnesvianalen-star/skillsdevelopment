@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Online - Golden Rosery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rose-primary: #D4848C;
+            --rose-light: #F4E5E7;
+            --rose-dark: #A36169;
+            --cream: #FDF8F5;
+            --gold: #C9A961;
+            --charcoal: #2C2C2C;
+            --text-dark: #3D3D3D;
+            --text-light: #6B6B6B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            background: var(--cream);
+            line-height: 1.6;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: rgba(253, 248, 245, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(212, 132, 140, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 2rem;
+        }
+
+        .logo-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--rose-dark);
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+
+        .back-link {
+            color: var(--rose-primary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--rose-dark);
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: var(--charcoal);
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .order-layout {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .products-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(212, 132, 140, 0.15);
+        }
+
+        .product-image-wrapper {
+            height: 280px;
+            background: var(--rose-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--gold);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            z-index: 10;
+        }
+
+        .product-details {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--charcoal);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-description {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--rose-dark);
+        }
+
+        .price-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-weight: 400;
+        }
+
+        .add-btn {
+            background: var(--rose-primary);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .add-btn:hover {
+            background: var(--rose-dark);
+            transform: scale(1.05);
+        }
+
+        .add-btn.added {
+            background: #5CB85C;
+        }
+
+        .cart-sidebar {
+            position: sticky;
+            top: 100px;
+        }
+
+        .cart-container {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .cart-header {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--charcoal);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--rose-light);
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-light);
+        }
+
+        .cart-items {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background: var(--rose-light);
+            border-radius: 6px;
+        }
+
+        .cart-item-name {
+            font-size: 0.95rem;
+            color: var(--charcoal);
+            font-weight: 500;
+        }
+
+        .cart-item-price {
+            font-size: 1rem;
+            color: var(--rose-dark);
+            font-weight: 600;
+        }
+
+        .cart-summary {
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--rose-light);
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .total-label {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+
+        .total-amount {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--rose-dark);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: var(--rose-primary);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 1rem;
+        }
+
+        .checkout-btn:hover {
+            background: var(--rose-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 132, 140, 0.3);
+        }
+
+        .contact-cta {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--cream);
+            border-radius: 6px;
+            margin-top: 1rem;
+        }
+
+        .contact-cta p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .phone-number {
+            font-size: 1.1rem;
+            color: var(--rose-primary);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        footer {
+            background: var(--charcoal);
+            color: #A0A0A0;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .order-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .products-section {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-sidebar {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="golden-rosery.html" class="logo-text">Golden Rosery</a>
+            <a href="golden-rosery.html" class="back-link">← Back to Home</a>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="page-header">
+            <h1 class="page-title">Order Online</h1>
+            <p class="page-subtitle">Browse our collection and add your favorites to the cart. For custom wedding cakes, please call us to discuss your vision.</p>
+        </div>
+
+        <div class="order-layout">
+            <div class="products-section">
+                <!-- Wedding Cake -->
+                <div class="product-card">
+                    <div class="product-image-wrapper" style="background: linear-gradient(135deg, #FFE4E1 20%, #FFB6C1 80%);">
+                        <span class="product-badge">BEST SELLER</span>
+                        <svg width="200" height="250" viewBox="0 0 200 250">
+                            <ellipse cx="100" cy="240" rx="80" ry="15" fill="#F0E8E8"/>
+                            <rect x="30" y="190" width="140" height="50" fill="#FFF" stroke="#D4848C" stroke-width="2" rx="4"/>
+                            <ellipse cx="100" cy="190" rx="70" ry="12" fill="#FFE4E1"/>
+                            <ellipse cx="100" cy="170" rx="65" ry="12" fill="#F0E8E8"/>
+                            <rect x="45" y="130" width="110" height="40" fill="#FFF" stroke="#D4848C" stroke-width="2" rx="3"/>
+                            <ellipse cx="100" cy="130" rx="55" ry="10" fill="#FFE4E1"/>
+                            <ellipse cx="100" cy="115" rx="50" ry="10" fill="#F0E8E8"/>
+                            <rect x="60" y="80" width="80" height="35" fill="#FFF" stroke="#D4848C" stroke-width="2" rx="3"/>
+                            <ellipse cx="100" cy="80" rx="40" ry="8" fill="#FFE4E1"/>
+                            <circle cx="85" cy="195" r="5" fill="#FF69B4"/>
+                            <circle cx="115" cy="195" r="5" fill="#FFB6C1"/>
+                            <circle cx="90" cy="135" r="5" fill="#FF1493"/>
+                            <circle cx="110" cy="135" r="5" fill="#FF69B4"/>
+                            <circle cx="100" cy="85" r="6" fill="#FF1493"/>
+                        </svg>
+                    </div>
+                    <div class="product-details">
+                        <h3 class="product-name">Custom Wedding Cake</h3>
+                        <p class="product-description">Multi-layer masterpiece with rose-tinted buttercream, fresh flowers, and premium flavors. Each tier is handcrafted.</p>
+                        <div class="product-footer">
+                            <div>
+                                <div class="product-price">$299+</div>
+                                <div class="price-label">Starting price</div>
+                            </div>
+                            <button class="add-btn" onclick="addToCart('Custom Wedding Cake', 299, this)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rose Cupcakes -->
+                <div class="product-card">
+                    <div class="product-image-wrapper" style="background: linear-gradient(135deg, #FFF8DC 20%, #FFE4B5 80%);">
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                            <svg width="80" height="100" viewBox="0 0 80 100">
+                                <ellipse cx="40" cy="85" rx="30" ry="8" fill="#D4A574"/>
+                                <path d="M 15 85 L 25 40 L 55 40 L 65 85 Z" fill="#FFB6C1" stroke="#D4848C" stroke-width="1.5"/>
+                                <ellipse cx="40" cy="40" rx="20" ry="8" fill="#FF9FB0"/>
+                                <circle cx="40" cy="30" r="15" fill="#FFE4E1"/>
+                                <circle cx="40" cy="25" r="3" fill="#FF1493"/>
+                            </svg>
+                            <svg width="80" height="100" viewBox="0 0 80 100">
+                                <ellipse cx="40" cy="85" rx="30" ry="8" fill="#D4A574"/>
+                                <path d="M 15 85 L 25 40 L 55 40 L 65 85 Z" fill="#F0E68C" stroke="#DAA520" stroke-width="1.5"/>
+                                <ellipse cx="40" cy="40" rx="20" ry="8" fill="#FFD700"/>
+                                <circle cx="40" cy="30" r="15" fill="#FFF8DC"/>
+                                <circle cx="40" cy="25" r="3" fill="#FFD700"/>
+                            </svg>
+                            <svg width="80" height="100" viewBox="0 0 80 100">
+                                <ellipse cx="40" cy="85" rx="30" ry="8" fill="#D4A574"/>
+                                <path d="M 15 85 L 25 40 L 55 40 L 65 85 Z" fill="#FFB6C1" stroke="#D4848C" stroke-width="1.5"/>
+                                <ellipse cx="40" cy="40" rx="20" ry="8" fill="#FF9FB0"/>
+                                <circle cx="40" cy="30" r="15" fill="#FFC8D4"/>
+                                <circle cx="40" cy="25" r="3" fill="#FF69B4"/>
+                            </svg>
+                            <svg width="80" height="100" viewBox="0 0 80 100">
+                                <ellipse cx="40" cy="85" rx="30" ry="8" fill="#D4A574"/>
+                                <path d="M 15 85 L 25 40 L 55 40 L 65 85 Z" fill="#F0E68C" stroke="#DAA520" stroke-width="1.5"/>
+                                <ellipse cx="40" cy="40" rx="20" ry="8" fill="#FFD700"/>
+                                <circle cx="40" cy="30" r="15" fill="#FFFACD"/>
+                                <circle cx="40" cy="25" r="3" fill="#FFA500"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <h3 class="product-name">Rose-Tinted Cupcakes</h3>
+                        <p class="product-description">Vanilla cupcakes with rose water buttercream. Pink, cream, and gold varieties available.</p>
+                        <div class="product-footer">
+                            <div>
+                                <div class="product-price">$24</div>
+                                <div class="price-label">Per dozen</div>
+                            </div>
+                            <button class="add-btn" onclick="addToCart('Rose-Tinted Cupcakes (dozen)', 24, this)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Artisan Muffins -->
+                <div class="product-card">
+                    <div class="product-image-wrapper" style="background: linear-gradient(135deg, #FFF5EE 20%, #FFE4C4 80%);">
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                            <svg width="70" height="60" viewBox="0 0 70 60">
+                                <ellipse cx="35" cy="55" rx="32" ry="6" fill="#C9A961"/>
+                                <ellipse cx="35" cy="30" rx="30" ry="25" fill="#DEB887"/>
+                                <circle cx="28" cy="25" r="4" fill="#8B4513"/>
+                                <circle cx="35" cy="30" r="4" fill="#8B4513"/>
+                                <circle cx="42" cy="26" r="4" fill="#8B4513"/>
+                            </svg>
+                            <svg width="70" height="60" viewBox="0 0 70 60">
+                                <ellipse cx="35" cy="55" rx="32" ry="6" fill="#C9A961"/>
+                                <ellipse cx="35" cy="30" rx="30" ry="25" fill="#F4A460"/>
+                                <circle cx="25" cy="28" r="4" fill="#DC143C"/>
+                                <circle cx="35" cy="32" r="4" fill="#DC143C"/>
+                                <circle cx="45" cy="28" r="4" fill="#DC143C"/>
+                            </svg>
+                            <svg width="70" height="60" viewBox="0 0 70 60">
+                                <ellipse cx="35" cy="55" rx="32" ry="6" fill="#C9A961"/>
+                                <ellipse cx="35" cy="30" rx="30" ry="25" fill="#FFE4B5"/>
+                                <circle cx="30" cy="26" r="3" fill="#FFD700"/>
+                                <circle cx="40" cy="26" r="3" fill="#FFD700"/>
+                                <path d="M 30 32 Q 35 36 40 32" stroke="#FFD700" fill="none" stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <h3 class="product-name">Artisan Muffins</h3>
+                        <p class="product-description">Fresh-baked with seasonal fruits. Blueberry, raspberry rose, or lemon poppy seed.</p>
+                        <div class="product-footer">
+                            <div>
+                                <div class="product-price">$18</div>
+                                <div class="price-label">Per dozen</div>
+                            </div>
+                            <button class="add-btn" onclick="addToCart('Artisan Muffins (dozen)', 18, this)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Celebration Cake -->
+                <div class="product-card">
+                    <div class="product-image-wrapper" style="background: linear-gradient(135deg, #FFE4E1 20%, #FFB6C1 80%);">
+                        <svg width="180" height="200" viewBox="0 0 180 200">
+                            <ellipse cx="90" cy="185" rx="70" ry="12" fill="#E8D5D5"/>
+                            <rect x="25" y="130" width="130" height="55" fill="#FFF" stroke="#D4848C" stroke-width="2" rx="4"/>
+                            <ellipse cx="90" cy="130" rx="65" ry="12" fill="#FFE4E1"/>
+                            <ellipse cx="90" cy="115" rx="55" ry="10" fill="#E8D5D5"/>
+                            <rect x="40" y="75" width="100" height="40" fill="#FFF" stroke="#D4848C" stroke-width="2" rx="3"/>
+                            <ellipse cx="90" cy="75" rx="50" ry="9" fill="#FFE4E1"/>
+                            <circle cx="75" cy="135" r="6" fill="#FF69B4"/>
+                            <circle cx="105" cy="135" r="6" fill="#FFB6C1"/>
+                            <circle cx="80" cy="80" r="5" fill="#FF1493"/>
+                            <circle cx="100" cy="80" r="5" fill="#FF69B4"/>
+                        </svg>
+                    </div>
+                    <div class="product-details">
+                        <h3 class="product-name">Celebration Cake</h3>
+                        <p class="product-description">Custom designed for birthdays and events. 8-inch round serves 10-12. Choice of flavors.</p>
+                        <div class="product-footer">
+                            <div>
+                                <div class="product-price">$89</div>
+                                <div class="price-label">8" round</div>
+                            </div>
+                            <button class="add-btn" onclick="addToCart('Celebration Cake (8-inch)', 89, this)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seasonal Pastries -->
+                <div class="product-card">
+                    <div class="product-image-wrapper" style="background: linear-gradient(135deg, #FFFACD 20%, #FFE4B5 80%);">
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; align-items: center;">
+                            <svg width="90" height="50" viewBox="0 0 90 50">
+                                <path d="M 10 40 Q 10 25 25 20 Q 40 15 45 15 Q 50 15 65 20 Q 80 25 80 40 Z" fill="#F5DEB3" stroke="#DAA520" stroke-width="1.5"/>
+                                <ellipse cx="45" cy="40" rx="38" ry="8" fill="#D2B48C"/>
+                            </svg>
+                            <svg width="80" height="55" viewBox="0 0 80 55">
+                                <ellipse cx="40" cy="45" rx="35" ry="8" fill="#D2B48C"/>
+                                <rect x="10" y="25" width="60" height="20" fill="#FFE4B5" stroke="#DEB887" stroke-width="1.5" rx="3"/>
+                                <path d="M 15 25 L 20 10 L 60 10 L 65 25" fill="#F5DEB3" stroke="#DAA520" stroke-width="1.5"/>
+                            </svg>
+                            <svg width="90" height="50" viewBox="0 0 90 50">
+                                <path d="M 10 40 Q 10 25 25 20 Q 40 15 45 15 Q 50 15 65 20 Q 80 25 80 40 Z" fill="#FFE4C4" stroke="#DEB887" stroke-width="1.5"/>
+                                <ellipse cx="45" cy="40" rx="38" ry="8" fill="#D2B48C"/>
+                                <circle cx="30" cy="30" r="3" fill="#DC143C"/>
+                                <circle cx="60" cy="30" r="3" fill="#DC143C"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <h3 class="product-name">Seasonal Pastries</h3>
+                        <p class="product-description">Assorted croissants and danishes. Baked fresh each morning with premium butter.</p>
+                        <div class="product-footer">
+                            <div>
+                                <div class="product-price">$15</div>
+                                <div class="price-label">Half dozen</div>
+                            </div>
+                            <button class="add-btn" onclick="addToCart('Seasonal Pastries (half dozen)', 15, this)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gourmet Desserts -->
+                <div class="product-card">
+                    <div class="product-image-wrapper" style="background: linear-gradient(135deg, #FFE4E1 20%, #FFC8D4 80%);">
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 15px;">
+                            <svg width="35" height="35" viewBox="0 0 35 35">
+                                <circle cx="17.5" cy="17.5" r="16" fill="#FFB6C1" stroke="#FF69B4" stroke-width="1.5"/>
+                                <circle cx="17.5" cy="17.5" r="10" fill="#FF9FB0"/>
+                                <circle cx="17.5" cy="17.5" r="5" fill="#FFF"/>
+                            </svg>
+                            <svg width="35" height="35" viewBox="0 0 35 35">
+                                <circle cx="17.5" cy="17.5" r="16" fill="#F0E68C" stroke="#DAA520" stroke-width="1.5"/>
+                                <circle cx="17.5" cy="17.5" r="10" fill="#FFD700"/>
+                                <circle cx="17.5" cy="17.5" r="5" fill="#FFF"/>
+                            </svg>
+                            <svg width="35" height="35" viewBox="0 0 35 35">
+                                <circle cx="17.5" cy="17.5" r="16" fill="#DDA0DD" stroke="#9370DB" stroke-width="1.5"/>
+                                <circle cx="17.5" cy="17.5" r="10" fill="#BA55D3"/>
+                                <circle cx="17.5" cy="17.5" r="5" fill="#FFF"/>
+                            </svg>
+                            <svg width="40" height="30" viewBox="0 0 40 30">
+                                <rect x="5" y="5" width="30" height="20" fill="#FFE4E1" stroke="#FFB6C1" stroke-width="1.5" rx="2"/>
+                                <rect x="7" y="7" width="26" height="16" fill="#FFF"/>
+                                <circle cx="20" cy="15" r="3" fill="#FF69B4"/>
+                            </svg>
+                            <svg width="35" height="35" viewBox="0 0 35 35">
+                                <circle cx="17.5" cy="17.5" r="16" fill="#E0BBE4" stroke="#9370DB" stroke-width="1.5"/>
+                                <circle cx="17.5" cy="17.5" r="10" fill="#C8A2C8"/>
+                                <circle cx="17.5" cy="17.5" r="5" fill="#FFF"/>
+                            </svg>
+                            <svg width="35" height="35" viewBox="0 0 35 35">
+                                <circle cx="17.5" cy="17.5" r="16" fill="#FFC8D4" stroke="#FF69B4" stroke-width="1.5"/>
+                                <circle cx="17.5" cy="17.5" r="10" fill="#FFB6C1"/>
+                                <circle cx="17.5" cy="17.5" r="5" fill="#FFF"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <h3 class="product-name">Gourmet Dessert Box</h3>
+                        <p class="product-description">French macarons, petit fours, and rose-infused treats. Elegantly packaged.</p>
+                        <div class="product-footer">
+                            <div>
+                                <div class="product-price">$32</div>
+                                <div class="price-label">Box of 12</div>
+                            </div>
+                            <button class="add-btn" onclick="addToCart('Gourmet Dessert Box', 32, this)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cart-sidebar">
+                <div class="cart-container">
+                    <h2 class="cart-header">Your Order</h2>
+                    <div class="cart-items" id="cartItems">
+                        <div class="cart-empty">
+                            <p>Your cart is empty</p>
+                        </div>
+                    </div>
+                    <div class="cart-summary" id="cartSummary" style="display: none;">
+                        <div class="cart-total">
+                            <span class="total-label">Total</span>
+                            <span class="total-amount">$<span id="totalAmount">0.00</span></span>
+                        </div>
+                        <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+                    </div>
+                    <div class="contact-cta">
+                        <p>Questions or custom orders?</p>
+                        <a href="tel:555-767-3225" class="phone-number">(555) 767-3225</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Golden Rosery. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let cart = [];
+        let total = 0;
+
+        function addToCart(name, price, button) {
+            cart.push({ name, price });
+            total += price;
+            updateCart();
+            
+            button.textContent = 'Added ✓';
+            button.classList.add('added');
+            setTimeout(() => {
+                button.textContent = 'Add to Cart';
+                button.classList.remove('added');
+            }, 1500);
+        }
+
+        function updateCart() {
+            const cartItemsDiv = document.getElementById('cartItems');
+            const cartSummary = document.getElementById('cartSummary');
+            const totalAmountSpan = document.getElementById('totalAmount');
+
+            if (cart.length === 0) {
+                cartItemsDiv.innerHTML = '<div class="cart-empty"><p>Your cart is empty</p></div>';
+                cartSummary.style.display = 'none';
+            } else {
+                cartItemsDiv.innerHTML = cart.map((item, index) => `
+                    <div class="cart-item">
+                        <span class="cart-item-name">${item.name}</span>
+                        <span class="cart-item-price">$${item.price}</span>
+                    </div>
+                `).join('');
+                cartSummary.style.display = 'block';
+            }
+
+            totalAmountSpan.textContent = total.toFixed(2);
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty. Please add items before checking out.');
+                return;
+            }
+
+            const orderDetails = cart.map(item => `• ${item.name}: $${item.price}`).join('\n');
+            
+            alert(`Thank you for your order!\n\nOrder Summary:\n${orderDetails}\n\nTotal: $${total.toFixed(2)}\n\nWe'll contact you within 24 hours to confirm your order and arrange pickup or delivery.\n\nFor immediate assistance, call (555) 767-3225.`);
+            
+            cart = [];
+            total = 0;
+            updateCart();
+        }
+    </script>
+</body>
+</html>

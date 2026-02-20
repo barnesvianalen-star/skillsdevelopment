@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Crust Bakery - Grand Opening</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Anybody:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FFF8F0;
+            --wheat: #E8C4A0;
+            --golden: #D4A574;
+            --crust: #A67C52;
+            --chocolate: #3D2817;
+            --sage: #8B9D83;
+            --rose: #D4A5A5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Anybody', sans-serif;
+            background: var(--cream);
+            color: var(--chocolate);
+            overflow-x: hidden;
+        }
+
+        /* Decorative background elements */
+        .bg-decoration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.03;
+            background-image: 
+                radial-gradient(circle at 20% 30%, var(--golden) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, var(--sage) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, var(--rose) 0%, transparent 50%);
+        }
+
+        /* Grain texture overlay */
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.015;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .hero-content {
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .opening-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--golden), var(--crust));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1.2s ease-out 0.2s backwards;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--chocolate);
+            animation: fadeInUp 1.2s ease-out 0.4s backwards;
+        }
+
+        h1 strong {
+            font-weight: 700;
+            display: block;
+            background: linear-gradient(135deg, var(--golden), var(--crust));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            color: var(--crust);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+            font-weight: 300;
+            animation: fadeInUp 1.2s ease-out 0.6s backwards;
+        }
+
+        .date-banner {
+            background: var(--wheat);
+            padding: 2rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 2rem;
+            border: 3px solid var(--golden);
+            animation: fadeInUp 1.2s ease-out 0.8s backwards, float 3s ease-in-out infinite;
+        }
+
+        .date-banner h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--chocolate);
+            margin-bottom: 0.5rem;
+        }
+
+        .date-banner p {
+            font-size: 1.1rem;
+            color: var(--crust);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--chocolate);
+            color: var(--cream);
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin: 0 0.5rem;
+            border: 2px solid var(--chocolate);
+            animation: fadeInUp 1.2s ease-out 1s backwards;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--chocolate);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(61, 40, 23, 0.2);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: var(--chocolate);
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--chocolate);
+            color: var(--cream);
+        }
+
+        /* Countdown Timer */
+        .countdown-section {
+            padding: 6rem 0;
+            background: linear-gradient(180deg, transparent, var(--wheat) 50%, transparent);
+        }
+
+        .countdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 3rem auto;
+        }
+
+        .countdown-item {
+            text-align: center;
+            background: white;
+            padding: 2rem 1rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .countdown-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .countdown-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--golden);
+            display: block;
+            line-height: 1;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--crust);
+            margin-top: 0.5rem;
+        }
+
+        /* Featured Items Grid */
+        .featured-section {
+            padding: 6rem 0;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            text-align: center;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--crust);
+            margin-bottom: 4rem;
+            font-weight: 300;
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .item-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .item-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .item-image {
+            height: 250px;
+            background: linear-gradient(135deg, var(--wheat), var(--golden));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), transparent);
+        }
+
+        .item-content {
+            padding: 2rem;
+        }
+
+        .item-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--chocolate);
+        }
+
+        .item-card p {
+            color: var(--crust);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .item-badge {
+            display: inline-block;
+            background: var(--sage);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Story Section */
+        .story-section {
+            padding: 6rem 0;
+            background: var(--wheat);
+            position: relative;
+        }
+
+        .story-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .story-section .section-title {
+            margin-bottom: 2rem;
+        }
+
+        .story-text {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: var(--chocolate);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .story-highlight {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-style: italic;
+            color: var(--crust);
+            margin: 3rem 0;
+            font-weight: 400;
+        }
+
+        /* Location & Hours */
+        .info-section {
+            padding: 6rem 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .info-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .info-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--chocolate);
+        }
+
+        .info-card p {
+            color: var(--crust);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        /* Newsletter */
+        .newsletter-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--golden), var(--crust));
+            color: white;
+            text-align: center;
+        }
+
+        .newsletter-section .section-title {
+            color: white;
+        }
+
+        .newsletter-section .section-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .newsletter-form {
+            max-width: 600px;
+            margin: 3rem auto;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 1.2rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-family: 'Anybody', sans-serif;
+        }
+
+        .newsletter-button {
+            background: var(--chocolate);
+            color: white;
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Anybody', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .newsletter-button:hover {
+            background: white;
+            color: var(--chocolate);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--chocolate);
+            color: var(--cream);
+            padding: 3rem 0 2rem;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            font-size: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--wheat);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            h1 {
+                font-size: 3rem;
+            }
+
+            .countdown {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .newsletter-input {
+                min-width: 100%;
+            }
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-decoration"></div>
+    <div class="grain"></div>
+
+    <header>
+        <div class="container">
+            <div class="hero-content">
+                <div class="opening-badge">Grand Opening Soon</div>
+                <h1>
+                    Welcome to<br>
+                    <strong>Golden Crust Bakery</strong>
+                </h1>
+                <p class="tagline">Where tradition meets innovation in every handcrafted loaf, pastry, and sweet delight</p>
+                
+                <div class="date-banner">
+                    <h2>Opening March 1st, 2026</h2>
+                    <p>📍 123 Main Street, Downtown</p>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <a href="#menu" class="cta-button">Explore Our Menu</a>
+                    <a href="#newsletter" class="cta-button secondary">Get Updates</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="countdown-section">
+        <div class="container">
+            <h2 class="section-title">Opening In...</h2>
+            <div class="countdown" id="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="days">00</span>
+                    <span class="countdown-label">Days</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">00</span>
+                    <span class="countdown-label">Hours</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">00</span>
+                    <span class="countdown-label">Minutes</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-label">Seconds</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-section" id="menu">
+        <div class="container">
+            <h2 class="section-title reveal">Signature Creations</h2>
+            <p class="section-subtitle reveal">Handcrafted daily with love and the finest ingredients</p>
+            
+            <div class="items-grid">
+                <div class="item-card reveal">
+                    <div class="item-image">🥐</div>
+                    <div class="item-content">
+                        <h3>Classic Croissants</h3>
+                        <p>Buttery, flaky perfection with 72 delicate layers. Made with French butter and aged overnight.</p>
+                        <span class="item-badge">Fresh Daily</span>
+                    </div>
+                </div>
+
+                <div class="item-card reveal">
+                    <div class="item-image">🍞</div>
+                    <div class="item-content">
+                        <h3>Artisan Sourdough</h3>
+                        <p>Naturally fermented for 24 hours using our century-old starter. Crispy crust, chewy interior.</p>
+                        <span class="item-badge">House Special</span>
+                    </div>
+                </div>
+
+                <div class="item-card reveal">
+                    <div class="item-image">🧁</div>
+                    <div class="item-content">
+                        <h3>Gourmet Cupcakes</h3>
+                        <p>Rotating seasonal flavors with handmade frosting. From classic vanilla to lavender honey.</p>
+                        <span class="item-badge">Seasonal</span>
+                    </div>
+                </div>
+
+                <div class="item-card reveal">
+                    <div class="item-image">🥖</div>
+                    <div class="item-content">
+                        <h3>French Baguettes</h3>
+                        <p>Traditional recipe with a golden, crackling crust. Perfect for sandwiches or alongside dinner.</p>
+                        <span class="item-badge">Fresh Daily</span>
+                    </div>
+                </div>
+
+                <div class="item-card reveal">
+                    <div class="item-image">🍰</div>
+                    <div class="item-content">
+                        <h3>Custom Cakes</h3>
+                        <p>Bespoke celebration cakes for every occasion. Pre-order your dream cake today.</p>
+                        <span class="item-badge">Made to Order</span>
+                    </div>
+                </div>
+
+                <div class="item-card reveal">
+                    <div class="item-image">🥧</div>
+                    <div class="item-content">
+                        <h3>Fruit Tarts</h3>
+                        <p>Delicate pastry filled with vanilla custard and topped with fresh seasonal fruits.</p>
+                        <span class="item-badge">Chef's Choice</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="story-section">
+        <div class="container">
+            <div class="story-content reveal">
+                <h2 class="section-title">Our Story</h2>
+                <p class="story-text">
+                    Golden Crust Bakery was born from a simple dream: to bring the warmth and tradition of 
+                    European artisan baking to our community. After training in the finest bakeries of Paris 
+                    and Lyon, our master baker brings decades of expertise and passion to every creation.
+                </p>
+                <p class="story-highlight">
+                    "Baking is not just a craft—it's a love letter to tradition, 
+                    written in flour, butter, and time."
+                </p>
+                <p class="story-text">
+                    We source organic, local ingredients whenever possible and never compromise on quality. 
+                    Every loaf, pastry, and sweet treat is made by hand, with patience and care, 
+                    using time-honored techniques passed down through generations.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="info-section">
+        <div class="container">
+            <h2 class="section-title reveal">Visit Us</h2>
+            <div class="info-grid">
+                <div class="info-card reveal">
+                    <div class="info-icon">📍</div>
+                    <h3>Location</h3>
+                    <p>123 Main Street<br>Downtown District<br>Your City, ST 12345</p>
+                </div>
+
+                <div class="info-card reveal">
+                    <div class="info-icon">🕐</div>
+                    <h3>Opening Hours</h3>
+                    <p>
+                        Monday - Friday: 6:30 AM - 7:00 PM<br>
+                        Saturday: 7:00 AM - 8:00 PM<br>
+                        Sunday: 8:00 AM - 5:00 PM
+                    </p>
+                </div>
+
+                <div class="info-card reveal">
+                    <div class="info-icon">☎️</div>
+                    <h3>Contact</h3>
+                    <p>
+                        Phone: (555) 123-4567<br>
+                        Email: hello@goldencrustbakery.com<br>
+                        Pre-orders welcome!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter-section" id="newsletter">
+        <div class="container">
+            <h2 class="section-title">Stay Connected</h2>
+            <p class="section-subtitle">Be the first to know about opening specials, seasonal treats, and exclusive offers</p>
+            
+            <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+                <input type="email" class="newsletter-input" placeholder="Enter your email" required>
+                <button type="submit" class="newsletter-button">Join the List</button>
+            </form>
+            
+            <p style="margin-top: 1rem; opacity: 0.9;">Opening day special: First 100 customers get a free croissant! 🥐</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 1rem;">Golden Crust Bakery</h3>
+            <div class="social-links">
+                <a href="#" title="Instagram">📷</a>
+                <a href="#" title="Facebook">👍</a>
+                <a href="#" title="Twitter">🐦</a>
+            </div>
+            <p style="opacity: 0.7; margin-top: 2rem;">© 2026 Golden Crust Bakery. All rights reserved.</p>
+            <p style="opacity: 0.5; margin-top: 0.5rem; font-size: 0.9rem;">Made with ❤️ and flour</p>
+        </div>
+    </footer>
+
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            const openingDate = new Date('2026-03-01T06:30:00').getTime();
+            const now = new Date().getTime();
+            const distance = openingDate - now;
+
+            if (distance > 0) {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            } else {
+                document.getElementById('countdown').innerHTML = '<h2 style="font-family: Cormorant Garamond, serif; font-size: 3rem;">We\'re Open! 🎉</h2>';
+            }
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Scroll Reveal Animation
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', reveal);
+        reveal(); // Initial check
+
+        // Newsletter Form Handler
+        function handleNewsletter(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('input').value;
+            alert(`Thank you for subscribing! We'll send updates to ${email}. See you on opening day! 🥐`);
+            event.target.reset();
+        }
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
